@@ -3,7 +3,7 @@ description: 'Generates JSON and text summaries using ci/print_summary.py'
 
 inputs:
   # Check ci/print_summary.py for any required CLI args or env vars (e.g., status, version)
-  status:
+  numbers:
     description: 'Build or workflow status'
     required: false
     default: 'success'
