@@ -1,27 +1,28 @@
-name: 'Print Summary'
-description: 'Generates JSON and text summaries from numbers input'
+name: 'Summary Action'
+description: 'Computes JSON summary from a JSON array of numbers'
 
 inputs:
   numbers:
-    description: 'JSON payload of numbers'
+    description: 'JSON array of numbers as string'
     required: true
 
 outputs:
   summary:
-    description: 'Summary in JSON format'
+    description: 'Summary produced by print_summary.py (JSON)'
     value: ${{ steps.run-summary.outputs.summary }}
-  summary_text:
-    description: 'Summary in plain text format'
-    value: ${{ steps.run-summary.outputs.summary_text }}
 
 runs:
   using: 'composite'
   steps:
     - name: Run print_summary.py
-    id: run-summary
-    shell: bash
-    env:
-      INPUT_NUMBERS: ${{ inputs.numbers }}
-    run: |
-      printf '%s' "$INPUT_NUMBERS" > summary.json
-      python3 ci/print_summary.py summary.json
+      id: run-summary
+      shell: bash
+      env:
+        INPUT_NUMBERS: ${{ inputs.numbers }}
+      run: |
+        SUMMARY=$(printf '%s' "$INPUT_NUMBERS" | python3 ci/print_summary.py)
+        {
+          echo 'summary<<EOF'
+          echo "$SUMMARY"
+          echo 'EOF'
+        } >> "$GITHUB_OUTPUT"
