@@ -1,0 +1,18 @@
+name: Consumer workflow using reusable
+on: [workflow_dispatch]
+
+
+jobs:
+  call-reusable: 
+    uses: ./.github/workflows/reusable.yml
+    with:
+      numbers: '[5,10,15,20,25]'
+
+  show-summary:
+    runs-on: ubuntu-latest
+    needs: [ call-reusable ]
+    steps:
+      - name: print the summary
+        run: |
+          echo "Reusable summary (JSON): ${{ needs.call-reusable.outputs.summary }}"
+          echo "Reusable summary (text): ${{ needs.call-reusable.outputs.summary_text }}"
