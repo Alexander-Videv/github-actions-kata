@@ -27,7 +27,7 @@ jobs:
         id: call-summary
         uses: ./.github/actions/summary-action
         with:
-          number: ${{ inputs.numbers }}
+          numbers: ${{ inputs.numbers }}
 
       - name: Format summary
         id: format
