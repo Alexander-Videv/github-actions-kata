@@ -18,9 +18,10 @@ runs:
   using: 'composite'
   steps:
     - name: Run print_summary.py
-      id: run-summary
-      shell: bash
-      env:
-        INPUT_NUMBERS: ${{ inputs.numbers }}
-      run: |
-        printf '%s' "$INPUT_NUMBERS" | python3 ci/print_summary.py
+    id: run-summary
+    shell: bash
+    env:
+      INPUT_NUMBERS: ${{ inputs.numbers }}
+    run: |
+      printf '%s' "$INPUT_NUMBERS" > summary.json
+      python3 ci/print_summary.py summary.json
