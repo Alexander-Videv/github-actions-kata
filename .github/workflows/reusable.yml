@@ -25,7 +25,7 @@ jobs:
 
       - name: Call summary composite action
         id: call-summary
-        uses: ./github/actions/summary-action
+        uses: ./.github/actions/summary-action
         with:
           number: ${{ inputs.numbers }}
 
