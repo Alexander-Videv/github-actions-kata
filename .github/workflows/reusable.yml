@@ -10,10 +10,10 @@ on:
     outputs:
       summary:
         description: 'Summary produced by composite action (JSON)'
-        value: ${{ jobs.summarize.output.summary }}
+        value: ${{ jobs.summarize.outputs.summary }}
       summary_text:
         description: 'Summary produced by composite action (human-readable)'
-        value: ${{ jobs.summarize.output.summary_text }}
+        value: ${{ jobs.summarize.outputs.summary_text }}
 jobs:
   summarize:
     runs-on: ubuntu-latest
