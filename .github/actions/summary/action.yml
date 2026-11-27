@@ -1,0 +1,25 @@
+name: 'Build Summary Composite Action'
+description: 'Generates JSON and text summaries using ci/print_summary.py'
+
+inputs:
+  # Check ci/print_summary.py for any required CLI args or env vars (e.g., status, version)
+  status:
+    description: 'Build or workflow status'
+    required: false
+    default: 'success'
+
+outputs:
+  summary:
+    description: 'Summary output in JSON format'
+    value: ${{ steps.generate-summary.outputs.summary }}
+  summary_text:
+    description: 'Summary output in plain text format'
+    value: ${{ steps.generate-summary.outputs.summary_text }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run print_summary.py
+      id: generate-summary
+      shell: bash
+      run: python3 ci/print_summary.py
