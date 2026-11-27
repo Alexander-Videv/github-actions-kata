@@ -3,7 +3,7 @@ on: push
 env:
   github_username: alexander-videv
   github_password: ${{ secrets.GITHUB_TOKEN }}
-  git_commit: 2439e61
+  git_commit: ${{ github.sha }}
 jobs:
   Build:
     runs-on: ubuntu-latest
