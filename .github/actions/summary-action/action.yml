@@ -1,25 +1,26 @@
-name: 'Build Summary Composite Action'
-description: 'Generates JSON and text summaries using ci/print_summary.py'
+name: 'Print Summary'
+description: 'Generates JSON and text summaries from numbers input'
 
 inputs:
-  # Check ci/print_summary.py for any required CLI args or env vars (e.g., status, version)
   numbers:
-    description: 'Build or workflow status'
-    required: false
-    default: 'success'
+    description: 'JSON payload of numbers'
+    required: true
 
 outputs:
   summary:
-    description: 'Summary output in JSON format'
-    value: ${{ steps.generate-summary.outputs.summary }}
+    description: 'Summary in JSON format'
+    value: ${{ steps.run-summary.outputs.summary }}
   summary_text:
-    description: 'Summary output in plain text format'
-    value: ${{ steps.generate-summary.outputs.summary_text }}
+    description: 'Summary in plain text format'
+    value: ${{ steps.run-summary.outputs.summary_text }}
 
 runs:
   using: 'composite'
   steps:
     - name: Run print_summary.py
-      id: generate-summary
+      id: run-summary
       shell: bash
-      run: python3 ci/print_summary.py
+      env:
+        INPUT_NUMBERS: ${{ inputs.numbers }}
+      run: |
+        printf '%s' "$INPUT_NUMBERS" | python3 ci/print_summary.py
